@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Profile Cá Nhân</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5; 
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+        }
+
+        .profile-card {
+            background-color: #ffffff; 
+            width: 350px; 
+            border: 1px solid #ddd; 
+            border-radius: 15px; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+            
+           
+            margin: 20px; 
+        }
+
+        .avatar {
+            width: 120px; 
+            height: 120px;
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 4px solid #3498db; 
+            margin-bottom: 15px; 
+        }
+
+
+        .name {
+            font-size: 24px; 
+            margin: 10px 0 5px 0; 
+            color: #2c3e50;
+        }
+
+        .title {
+            color: #7f8c8d; 
+            font-weight: bold;
+            text-transform: uppercase; 
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #34495e;
+            line-height: 1.6; 
+            margin-bottom: 20px;
+        }
+
+        .skills-list {
+            list-style: none; 
+            padding: 0; 
+            margin-bottom: 25px;
+        }
+
+        .skill-item {
+            display: inline-block; 
+            background-color: #e1f5fe; 
+            color: #0277bd;
+            padding: 8px 15px; 
+            border-radius: 20px; 
+            margin: 5px; 
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        .btn-contact {
+            display: inline-block;
+            text-decoration: none; 
+            background-color: #3498db; 
+            color: #ffffff; 
+            padding: 12px 30px; 
+            border-radius: 25px; 
+            font-weight: bold;
+            transition: background-color 0.3s ease; 
+        }
+
+   
+        .btn-contact:hover {
+            background-color: #2980b9; 
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <img src="avatar.jpg" alt="Avatar" class="avatar">
+        <h1 class="name">Phạm Thái Sơn</h1>
+        <p class="title">Web Developer</p>
+        <p class="description">
+            Đam mê xây dựng các giao diện web đẹp mắt và thân thiện với người dùng. 
+            Luôn học hỏi công nghệ mới để phát triển bản thân mỗi ngày.
+        </p>
+        <ul class="skills-list">
+            <li class="skill-item">HTML5</li>
+            <li class="skill-item">CSS3</li>
+            <li class="skill-item">JavaScript</li>
+            <li class="skill-item">Responsive Design</li>
+        </ul>
+        <a href="mailto:contact@email.com" class="btn-contact">Liên hệ</a>
+    </div>
+
+</body>
+</html>
