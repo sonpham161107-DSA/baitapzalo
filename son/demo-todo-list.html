@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Todo List</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  .form-nhap {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .form-nhap input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form-nhap button {
+    padding: 8px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .form-nhap button:hover {
+    background-color: #218838;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .noi-dung {
+    flex: 1;
+    margin-left: 10px;
+  }
+  .hoan-thanh {
+    text-decoration: line-through;
+    color: #888;
+  }
+  .btn-xoa {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-xoa:hover {
+    background-color: #c82333;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Todo List</h1>
+
+  <!-- Ô nhập công việc mới -->
+  <div class="form-nhap">
+    <input type="text" id="noiDung" placeholder="Nhập công việc cần làm...">
+    <button id="btnThem" onclick="themCongViec()">Thêm</button>
+  </div>
+
+  <!-- DANH SÁCH CÔNG VIỆC -->
+  <ul id="danhSach">
+    <!-- JS sẽ điền dữ liệu vào đây -->
+  </ul>
+</div>
+
+<script>
+  /* =========================================================
+     1. DỮ LIỆU: mảng các object công việc
+     ========================================================= */
+  let danhSachCV = [
+    { id: 1, noiDung: "Học bài JavaScript", hoanThanh: false },
+    { id: 2, noiDung: "Làm bài tập về nhà", hoanThanh: true },
+    { id: 3, noiDung: "Ôn thi giữa kỳ", hoanThanh: false }
+  ];
+
+  // Biến đếm để cấp id mới cho công việc tiếp theo được thêm vào
+  let idTiepTheo = 4;
+
+  /* =========================================================
+     2. LẤY THAM CHIẾU CÁC PHẦN TỬ DOM CẦN DÙNG NHIỀU LẦN
+     ========================================================= */
+  let oNoiDung = document.getElementById("noiDung");
+  let oDanhSach = document.getElementById("danhSach");   
+
+  /* =========================================================
+     3. HÀM TÌM VỊ TRÍ 1 CÔNG VIỆC TRONG MẢNG THEO ID
+     ========================================================= */
+  function timViTri(id){
+     for(let i = 0; i < danhSachCV.length; i++){
+        if(danhSachCV[i].id == id){
+           return i;
+        }
+     }
+     return -1;
+  }   
+
+  /* =========================================================
+     4. HÀM VẼ LẠI TOÀN BỘ DANH SÁCH DỰA TRÊN danhSachCV
+     ========================================================= */
+  function hienThiDanhSach(){
+     let html = "";
+     for(let i = 0; i < danhSachCV.length; i++){
+        let cv = danhSachCV[i];
+        let trangThai = cv.hoanThanh ? "checked" : "";
+        let lopCSS = cv.hoanThanh ? "noi-dung hoan-thanh" : "noi-dung";
+
+        html += `
+           <li>
+              <input type="checkbox" ${trangThai} onchange="toggleHoanThanh(${cv.id})"/>
+              <span class="${lopCSS}">
+                 ${cv.noiDung}
+              </span>
+              <button class="btn-xoa" onclick="xoaCongViec(${cv.id})">
+                 Xóa
+              </button>
+           </li>
+        `;
+     }
+     oDanhSach.innerHTML = html;
+  }
+
+  /* =========================================================
+     5. HÀM THÊM CÔNG VIỆC MỚI
+     ========================================================= */
+  function themCongViec(){
+     let textNoiDung = oNoiDung.value.trim();
+     if(textNoiDung === "") {
+         alert("Vui lòng nhập nội dung công việc!");
+         return;
+     }
+
+     let cv = {
+        id: idTiepTheo,
+        noiDung: textNoiDung,
+        hoanThanh: false,
+     };
+     
+     danhSachCV.push(cv);
+     idTiepTheo++; 
+     oNoiDung.value = "";
+     hienThiDanhSach();
+  }
+
+  /* =========================================================
+     6. HÀM XÓA 1 CÔNG VIỆC THEO ID
+     ========================================================= */
+  function xoaCongViec(id){
+     let viTri = timViTri(id);
+     if(viTri !== -1) {
+         danhSachCV.splice(viTri, 1);
+         hienThiDanhSach();
+     }
+  }    
+
+  /* =========================================================
+     7. HÀM ĐÁNH DẤU HOÀN THÀNH / BỎ ĐÁNH DẤU
+     ========================================================= */
+  function toggleHoanThanh(id){
+     let viTri = timViTri(id);
+     if(viTri !== -1) {
+         danhSachCV[viTri].hoanThanh = !danhSachCV[viTri].hoanThanh;
+         hienThiDanhSach();
+     }
+  }
+
+  /* =========================================================
+     8. HIỂN THỊ DANH SÁCH LẦN ĐẦU KHI TẢI TRANG
+     ========================================================= */
+  hienThiDanhSach();
+</script>
+
+</body>
+</html>
+
